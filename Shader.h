@@ -30,7 +30,7 @@ namespace Graphic
 		void SetMat4(GLuint location, glm::mat4& value) const;
 
 		GLuint GetLocation(const char* name);
-
+		GLuint GetID() { return shaderID; }
 	private:
 		GLuint shaderID;
 		void CheckErorrStatus(GLuint program, GLenum type);

@@ -29,10 +29,13 @@ bool Model::Load(const wchar_t* filePath)
 		throw std::invalid_argument(excepMessage.c_str());
 		return false;
 	}
+
 	/**
 	*	process node
 	*/
 	ProcessNode(scene->mRootNode, scene);
+
+	importer.FreeScene();
 
 	return true;
 }
@@ -125,6 +128,7 @@ Mesh* Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 			indices.push_back(face.mIndices[k]);
 		}
 	}
+
 	/** set vertices and indices to mesh */
 	newMesh->SetVerticesAndIndices(vertices, indices);
 
@@ -132,7 +136,7 @@ Mesh* Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 	/**
 	*	process textures
 	*/
-	auto checkTextureRedundancy = [&](unsigned int hash)->bool {
+	auto checkTexturesRedundancy = [&](unsigned int hash)->bool {
 		try
 		{
 			newMesh->textures.at(hash);
@@ -153,8 +157,8 @@ Mesh* Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 			aiString path;
 			material->GetTexture(aiTextureType_DIFFUSE, i, &path);
 
-			unsigned int hash = HashString::FNV_1A_Multibyte(path.C_Str(), path.length);
-			if (checkTextureRedundancy(hash)) {
+			unsigned int hash = 0;
+			if (path.length == 0 || checkTexturesRedundancy(hash = HashString::FNV_1A_Multibyte(path.C_Str(), path.length))) {
 				continue;
 			}
 			else {
@@ -167,12 +171,12 @@ Mesh* Model::ProcessMesh(aiMesh* mesh, const aiScene* scene)
 
 		/** load specular textures */
 		std::map<unsigned int, Mesh::Texture> specularMaps;
-		for (unsigned int i : Range<unsigned int>(0, material->GetTextureCount(aiTextureType_DIFFUSE))) {
+		for (unsigned int i : Range<unsigned int>(0, material->GetTextureCount(aiTextureType_SPECULAR))) {
 			aiString path;
 			material->GetTexture(aiTextureType_SPECULAR, i, &path);
 
-			unsigned int hash = HashString::FNV_1A_Multibyte(path.C_Str(), path.length);
-			if (checkTextureRedundancy(hash)) {
+			unsigned int hash = 0;
+			if (path.length == 0 || checkTexturesRedundancy(hash = HashString::FNV_1A_Multibyte(path.C_Str(), path.length))) {
 				continue;
 			}
 			else {
@@ -265,16 +269,17 @@ void Mesh::SetVerticesAndIndices(std::vector<Vertex>& vertices, std::vector<GLui
 {
 	primitive->CreateBuffer(GL_ARRAY_BUFFER);
 	primitive->AttachBuffer(GL_ARRAY_BUFFER, vertices.size() * sizeof(Vertex), &vertices[0], GL_STATIC_DRAW);
-	primitive->AttribPointer(0, 3, sizeof(Vertex), (void*)0);
-	primitive->AttribPointer(1, 3, sizeof(Vertex), (void*)offsetof(Vertex, normal));
-	primitive->AttribPointer(2, 2, sizeof(Vertex), (void*)offsetof(Vertex, textureCoord));
-	primitive->AttribPointer(3, 3, sizeof(Vertex), (void*)offsetof(Vertex, tangent));
-	primitive->AttribPointer(4, 3, sizeof(Vertex), (void*)offsetof(Vertex, bitangent));
+	primitive->AttribPointer(0, 3, 14, (void*)0);
+	primitive->AttribPointer(1, 3, 14, (void*)offsetof(Vertex, normal));
+	primitive->AttribPointer(2, 2, 14, (void*)offsetof(Vertex, textureCoord));
+	primitive->AttribPointer(3, 3, 14, (void*)offsetof(Vertex, tangent));
+	primitive->AttribPointer(4, 3, 14, (void*)offsetof(Vertex, bitangent));
 	primitive->DetachBuffer();
 
 	if (!indices.empty()) {
 		primitive->CreateBuffer(GL_ELEMENT_ARRAY_BUFFER);
 		primitive->AttachBuffer(GL_ELEMENT_ARRAY_BUFFER, indices.size() * sizeof(GLuint), &indices[0], GL_STATIC_DRAW);
+		primitive->DetachBuffer();
 
 	}
 }
@@ -291,33 +296,33 @@ bool Mesh::Update(float dt)
 
 bool Mesh::Render(float dt)
 {
-	for (int i : Range<int>(0, textures.size())) {
-		if (i > 32) {
-			break;
-		}
-
-		meshTech->Use();
+	meshTech->Use();
+	int i = 0;
+	for (auto& texture : textures) {
 		meshTech->ActiveTexture(GL_TEXTURE0 + i);
 
-		switch (textures[i].type)
+		switch (texture.second.type)
 		{
 		case Mesh::TextureType::TEXTURE_DIFFUSE:
 			meshTech->SetDiffuseMap(i);
 			break;
+
 		case Mesh::TextureType::TEXTURE_SPECULAR:
 			meshTech->SetSpeculatMap(i);
 			break;
+
 		case Mesh::TextureType::TEXTURE_AMBIENT:
 			meshTech->SetAmbientMap(i);
 			break;
 		}
 		
-		meshTech->BindTexture(textures[i].textureID);
-		meshTech->ActiveTexture(GL_TEXTURE0);
-
+		meshTech->BindTexture(texture.second.textureID);
+		i++;
 	}
 
 	primitive->Render(dt);
+	meshTech->ActiveTexture(GL_TEXTURE0);
+	meshTech->BindTexture(0);
 
 	return true;
 }

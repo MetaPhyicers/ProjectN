@@ -14,6 +14,7 @@ public:
 	Mesh();
 	~Mesh();
 
+
 private:
 	struct Vertex
 	{

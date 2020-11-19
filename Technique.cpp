@@ -14,4 +14,5 @@ Technique::~Technique()
 void Technique::Use()
 {
 	shader->Use();
+	Graphic::GLEnable(GL_DEPTH_TEST);
 }

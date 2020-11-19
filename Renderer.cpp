@@ -181,8 +181,8 @@ void Graphic::Primitive::BufferSubData(GLenum target, size_t offset, size_t size
 
 void Graphic::Primitive::AttribPointer(GLuint layout, size_t numberOfCompoments, size_t stride, const void* offsetPointer)
 {
-	GLCall(glVertexAttribPointer(layout, numberOfCompoments, GL_FLOAT, GL_FALSE, stride * sizeof(GLfloat), offsetPointer));
 	GLCall(glEnableVertexAttribArray(layout));
+	GLCall(glVertexAttribPointer(layout, numberOfCompoments, GL_FLOAT, GL_FALSE, stride * sizeof(GLfloat), offsetPointer));
 }
 
 

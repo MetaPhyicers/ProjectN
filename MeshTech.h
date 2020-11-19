@@ -18,12 +18,21 @@ public:
 	void BindTexture(GLuint textureID);
 	void ActiveTexture(GLenum texture);
 
+	unsigned int GetID();
+
 private:
 	GLuint projectionLocation;
 	GLuint viewLocation;
 	GLuint modelLocation;
-	GLuint textureDiffuseLocation;
-	GLuint textureSpecularLocation;
-	GLuint textureAmbientLocation;
+
+	struct TextureLocation
+	{
+		GLuint textureDiffuseLocation;
+		GLuint textureSpecularLocation;
+		GLuint textureAmbientLocation;
+	};
+
+	TextureLocation tx0;
+	TextureLocation tx1;
 };	
 	

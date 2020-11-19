@@ -31,7 +31,7 @@ bool MeshTech::Init()
 
 	void main()
 	{
-		gl_Position = model * projectionView * vec4(aPosition, 1.0);
+		gl_Position = projectionView * model * vec4(aPosition, 1.0);
 		normal = aNormal;
 		textureCoord = aTextureCoord;
 	}
@@ -46,16 +46,22 @@ bool MeshTech::Init()
 	in vec2 textureCoord;
 
 	out vec4 FragColor;	
-
-	uniform sampler2D textureDiffuse;
-	uniform sampler2D textureSpecular;
-	uniform sampler2D textureAmbient;
+	
+	struct Texture
+	{
+		sampler2D textureDiffuse;
+		sampler2D textureSpecular;
+		sampler2D textureAmbient;
+	};
+	
+	uniform Texture tx0;
+	uniform Texture tx1;
 	
 	void main()
 	{
-		vec4 diffuse = texture(textureDiffuse, textureCoord);
-		vec4 specular = texture(textureSpecular, textureCoord);
-		vec4 ambient = texture(textureAmbient, textureCoord);
+		vec4 diffuse = texture(tx0.textureDiffuse, textureCoord) + texture(tx1.textureDiffuse, textureCoord);
+		vec4 specular = texture(tx0.textureSpecular, textureCoord) + texture(tx1.textureSpecular, textureCoord);
+		vec4 ambient = texture(tx0.textureAmbient, textureCoord) + texture(tx1.textureAmbient, textureCoord);
 		
 		FragColor = diffuse + specular + ambient;
 	}
@@ -66,9 +72,15 @@ bool MeshTech::Init()
 
 	projectionLocation = shader->GetLocation("projectionView");
 	modelLocation = shader->GetLocation("model");
-	textureDiffuseLocation = shader->GetLocation("textureDiffuse");
-	textureSpecularLocation = shader->GetLocation("textureSpecular");
-	textureAmbientLocation = shader->GetLocation("textureAmbient");
+
+	/** location 0 */
+	tx0.textureDiffuseLocation = shader->GetLocation("tx0.textureDiffuse");
+	tx0.textureSpecularLocation = shader->GetLocation("tx0.textureSpecular");
+	tx0.textureAmbientLocation = shader->GetLocation("tx0.textureAmbient");
+	/** location 1 */
+	tx1.textureDiffuseLocation = shader->GetLocation("tx1.textureDiffuse");
+	tx1.textureSpecularLocation = shader->GetLocation("tx1.textureSpecular");
+	tx1.textureAmbientLocation = shader->GetLocation("tx1.textureAmbient");
 	
 	glm::mat4 mat(1.f);
 	shader->SetMat4(projectionLocation, mat);
@@ -89,17 +101,41 @@ void MeshTech::SetModel(glm::mat4& model)
 
 void MeshTech::SetDiffuseMap(GLuint textureUnit)
 {
-	shader->SetInt(textureDiffuseLocation, textureUnit);
+	switch (textureUnit)
+	{
+	case 0:
+		shader->SetInt(tx0.textureDiffuseLocation, textureUnit);
+		break;
+	case 1:
+		shader->SetInt(tx1.textureDiffuseLocation, textureUnit);
+		break;
+	}
 }
 
 void MeshTech::SetSpeculatMap(GLuint textureUnit)
 {
-	shader->SetInt(textureSpecularLocation, textureUnit);
+	switch (textureUnit)
+	{
+	case 0:
+		shader->SetInt(tx0.textureSpecularLocation, textureUnit);
+		break;
+	case 1:
+		shader->SetInt(tx1.textureSpecularLocation, textureUnit);
+		break;
+	}
 }
 
 void MeshTech::SetAmbientMap(GLuint textureUnit)
 {
-	shader->SetInt(textureAmbientLocation, textureUnit);
+	switch (textureUnit)
+	{
+	case 0:
+		shader->SetInt(tx1.textureAmbientLocation, textureUnit);
+		break;
+	case 1:
+		shader->SetInt(tx1.textureAmbientLocation, textureUnit);
+		break;
+	}
 }
 
 void MeshTech::BindTexture(GLuint textureID)
@@ -110,4 +146,9 @@ void MeshTech::BindTexture(GLuint textureID)
 void MeshTech::ActiveTexture(GLenum texture)
 {
 	GLCall(glActiveTexture(texture));
+}
+
+unsigned int MeshTech::GetID()
+{
+	return shader->GetID();
 }
