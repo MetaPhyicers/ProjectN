@@ -1,0 +1,147 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+  <ItemGroup>
+    <Filter Include="源文件">
+      <UniqueIdentifier>{4FC737F1-C7A5-4376-A066-2A32D752A2FF}</UniqueIdentifier>
+      <Extensions>cpp;c;cc;cxx;c++;def;odl;idl;hpj;bat;asm;asmx</Extensions>
+    </Filter>
+    <Filter Include="头文件">
+      <UniqueIdentifier>{93995380-89BD-4b04-88EB-625FBE52EBFB}</UniqueIdentifier>
+      <Extensions>h;hh;hpp;hxx;h++;hm;inl;inc;ipp;xsd</Extensions>
+    </Filter>
+    <Filter Include="资源文件">
+      <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
+      <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
+    </Filter>
+    <Filter Include="头文件\renderer">
+      <UniqueIdentifier>{9535d47a-6b85-4524-951f-fd3e12ff913e}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\renderer">
+      <UniqueIdentifier>{545adab9-1e5e-4b3d-bd1c-5ccd0c4832a8}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\GUI">
+      <UniqueIdentifier>{2bf0792d-58ec-459e-b75b-24c54a7a1285}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\GUI">
+      <UniqueIdentifier>{465a367a-4ca9-4c73-aa69-49efd155edae}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Technique">
+      <UniqueIdentifier>{2f0a80f9-956b-42f2-ac6d-e6d0c8003d50}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="源文件\Technique">
+      <UniqueIdentifier>{06c04ee2-a340-48a0-8093-3d9f495835ce}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="头文件\Model">
+      <UniqueIdentifier>{dd04da8a-4595-4ed4-b48e-388fd8ffa156}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="main.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Windows.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Camera.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Utility.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Renderer.cpp">
+      <Filter>源文件\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Shader.cpp">
+      <Filter>源文件\renderer</Filter>
+    </ClCompile>
+    <ClCompile Include="Widgets.cpp">
+      <Filter>源文件\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Debug.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Technique.cpp">
+      <Filter>源文件\Technique</Filter>
+    </ClCompile>
+    <ClCompile Include="RectangleTech.cpp">
+      <Filter>源文件\Technique</Filter>
+    </ClCompile>
+    <ClCompile Include="Resources.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="FontTech.cpp">
+      <Filter>源文件\Technique</Filter>
+    </ClCompile>
+    <ClCompile Include="Engine.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="Event.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="GUI.cpp">
+      <Filter>源文件\GUI</Filter>
+    </ClCompile>
+    <ClCompile Include="Model.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
+    <ClCompile Include="MeshTech.cpp">
+      <Filter>源文件\Technique</Filter>
+    </ClCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="Windows.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Camera.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Utility.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Renderer.h">
+      <Filter>头文件\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Shader.h">
+      <Filter>头文件\renderer</Filter>
+    </ClInclude>
+    <ClInclude Include="Widgets.h">
+      <Filter>头文件\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Debug.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Technique.h">
+      <Filter>头文件\Technique</Filter>
+    </ClInclude>
+    <ClInclude Include="RectangleTech.h">
+      <Filter>头文件\Technique</Filter>
+    </ClInclude>
+    <ClInclude Include="Resources.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="FontTech.h">
+      <Filter>头文件\Technique</Filter>
+    </ClInclude>
+    <ClInclude Include="Engine.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Event.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="GUI.h">
+      <Filter>头文件\GUI</Filter>
+    </ClInclude>
+    <ClInclude Include="Pannel.hpp">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="SimpleModel.hpp">
+      <Filter>头文件\Model</Filter>
+    </ClInclude>
+    <ClInclude Include="Model.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="MeshTech.h">
+      <Filter>头文件\Technique</Filter>
+    </ClInclude>
+  </ItemGroup>
+</Project>
