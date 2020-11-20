@@ -87,6 +87,9 @@
     <ClCompile Include="MeshTech.cpp">
       <Filter>源文件\Technique</Filter>
     </ClCompile>
+    <ClCompile Include="Light.cpp">
+      <Filter>源文件</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Windows.h">
@@ -142,6 +145,9 @@
     </ClInclude>
     <ClInclude Include="MeshTech.h">
       <Filter>头文件\Technique</Filter>
+    </ClInclude>
+    <ClInclude Include="Light.h">
+      <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

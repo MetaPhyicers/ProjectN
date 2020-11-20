@@ -74,13 +74,13 @@ bool MeshTech::Init()
 	modelLocation = shader->GetLocation("model");
 
 	/** location 0 */
-	tx0.textureDiffuseLocation = shader->GetLocation("tx0.textureDiffuse");
-	tx0.textureSpecularLocation = shader->GetLocation("tx0.textureSpecular");
-	tx0.textureAmbientLocation = shader->GetLocation("tx0.textureAmbient");
+	txLocation0.textureDiffuseLocation = shader->GetLocation("tx0.textureDiffuse");
+	txLocation0.textureSpecularLocation = shader->GetLocation("tx0.textureSpecular");
+	txLocation0.textureAmbientLocation = shader->GetLocation("tx0.textureAmbient");
 	/** location 1 */
-	tx1.textureDiffuseLocation = shader->GetLocation("tx1.textureDiffuse");
-	tx1.textureSpecularLocation = shader->GetLocation("tx1.textureSpecular");
-	tx1.textureAmbientLocation = shader->GetLocation("tx1.textureAmbient");
+	txLocation1.textureDiffuseLocation = shader->GetLocation("tx1.textureDiffuse");
+	txLocation1.textureSpecularLocation = shader->GetLocation("tx1.textureSpecular");
+	txLocation1.textureAmbientLocation = shader->GetLocation("tx1.textureAmbient");
 	
 	glm::mat4 mat(1.f);
 	shader->SetMat4(projectionLocation, mat);
@@ -104,10 +104,10 @@ void MeshTech::SetDiffuseMap(GLuint textureUnit)
 	switch (textureUnit)
 	{
 	case 0:
-		shader->SetInt(tx0.textureDiffuseLocation, textureUnit);
+		shader->SetInt(txLocation0.textureDiffuseLocation, textureUnit);
 		break;
 	case 1:
-		shader->SetInt(tx1.textureDiffuseLocation, textureUnit);
+		shader->SetInt(txLocation1.textureDiffuseLocation, textureUnit);
 		break;
 	}
 }
@@ -117,10 +117,10 @@ void MeshTech::SetSpeculatMap(GLuint textureUnit)
 	switch (textureUnit)
 	{
 	case 0:
-		shader->SetInt(tx0.textureSpecularLocation, textureUnit);
+		shader->SetInt(txLocation0.textureSpecularLocation, textureUnit);
 		break;
 	case 1:
-		shader->SetInt(tx1.textureSpecularLocation, textureUnit);
+		shader->SetInt(txLocation1.textureSpecularLocation, textureUnit);
 		break;
 	}
 }
@@ -130,10 +130,10 @@ void MeshTech::SetAmbientMap(GLuint textureUnit)
 	switch (textureUnit)
 	{
 	case 0:
-		shader->SetInt(tx1.textureAmbientLocation, textureUnit);
+		shader->SetInt(txLocation1.textureAmbientLocation, textureUnit);
 		break;
 	case 1:
-		shader->SetInt(tx1.textureAmbientLocation, textureUnit);
+		shader->SetInt(txLocation1.textureAmbientLocation, textureUnit);
 		break;
 	}
 }
@@ -146,9 +146,4 @@ void MeshTech::BindTexture(GLuint textureID)
 void MeshTech::ActiveTexture(GLenum texture)
 {
 	GLCall(glActiveTexture(texture));
-}
-
-unsigned int MeshTech::GetID()
-{
-	return shader->GetID();
 }

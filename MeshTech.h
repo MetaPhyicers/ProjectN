@@ -15,10 +15,10 @@ public:
 	void SetDiffuseMap(GLuint textureUnit);
 	void SetSpeculatMap(GLuint textureUnit);
 	void SetAmbientMap(GLuint textureUnit);
+
+
 	void BindTexture(GLuint textureID);
 	void ActiveTexture(GLenum texture);
-
-	unsigned int GetID();
 
 private:
 	GLuint projectionLocation;
@@ -32,7 +32,9 @@ private:
 		GLuint textureAmbientLocation;
 	};
 
-	TextureLocation tx0;
-	TextureLocation tx1;
+
+	TextureLocation txLocation0;
+	TextureLocation txLocation1;
+
 };	
 	

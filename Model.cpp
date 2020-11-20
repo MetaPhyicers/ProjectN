@@ -1,10 +1,12 @@
 #include "Model.h"
 #include "MeshTech.h"
+#include "Light.h"
+
 #define STB_IMAGE_IMPLEMENTATION
 #include <stb_image.h>
 
 Model::Model(Graphic::Renderer* renderer)
-	:renderer(renderer), meshes(), meshTech(new MeshTech())
+	:renderer(renderer), meshes(), meshTech(new MeshTech()), light(new Light())
 {
 }
 

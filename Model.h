@@ -40,6 +40,7 @@ private:
 	std::map<unsigned int, Texture> textures;
 
 	class MeshTech* meshTech;
+	class Light* light;
 
 	void SetVerticesAndIndices(std::vector<Vertex>& vertices, std::vector<GLuint>& indices);
 	void SetTextures(std::map<unsigned int, Texture>& textures);
@@ -68,6 +69,7 @@ private:
 
 	std::string directory;
 	class MeshTech* meshTech;
+	class Light* light;
 
 	void ProcessNode(aiNode* node, const aiScene* scene);
 	Mesh* ProcessMesh(aiMesh* mesh, const aiScene* scene);
